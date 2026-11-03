@@ -1,83 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aircraft Inspection Color-Coded Table Generator</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #ffffff;
-  color: #1f2937;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
 }
+
 .btn {
-  padding: 0.38rem 0.8rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 0.375rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #fff;
+  color: #ffffff;
   background: #1e3a8a;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  border: 1px solid transparent;
+  user-select: none;
 }
 .btn:hover { background: #1e40af; }
 .btn.alt { background: #475569; }
 .btn.alt:hover { background: #334155; }
 .btn.ok { background: #15803d; }
 .btn.ok:hover { background: #166534; }
+
 .wrap {
   overflow-x: auto;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
+
 th, td {
   border: 1px solid #64748b;
-  padding: 3px 5px;
+  padding: 3px 6px;
   text-align: center;
   color: #1f2937;
   line-height: 1.25;
 }
+
 th {
   background: #e2e8f0;
   font-weight: 700;
+  color: #0f172a;
 }
+
 td:first-child, th:first-child {
   text-align: left;
   font-weight: 600;
-  background: #f8fafc;
-  min-width: 240px;
+  background: #f1f5f9;
+  min-width: 250px;
   position: sticky;
   left: 0;
   z-index: 10;
 }
+
 /* Full-cell high-contrast color classes */
 td.r { background: #f4cccc !important; color: #7f1d1d !important; font-weight: 700; }
 td.o { background: #fce4d6 !important; color: #7c2d12 !important; font-weight: 700; }
 td.y { background: #fff2cc !important; color: #713f12 !important; font-weight: 600; }
 td.g { background: #d9ead3 !important; color: #14532d !important; font-weight: 500; }
 td.w { background: #ffffff !important; color: #1f2937 !important; }
+
 td:focus {
   outline: 2px solid #1e3a8a;
   outline-offset: -2px;
 }
+
 small.cd {
   display: block;
   font-size: 0.65rem;
   font-weight: 700;
   margin-top: 1px;
 }
+
 .sw {
   display: inline-block;
   width: 0.85rem;
@@ -87,6 +99,7 @@ small.cd {
   margin-right: 0.25rem;
   border-radius: 2px;
 }
+
 .ph, .sig { display: none; }
 
 /* Dedicated A4 Landscape Print Mode */
@@ -94,6 +107,7 @@ small.cd {
   size: A4 landscape;
   margin: 6mm 7mm 6mm 7mm;
 }
+
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
@@ -102,24 +116,27 @@ small.cd {
   body {
     background: #fff !important;
     padding: 0 !important;
+    margin: 0 !important;
   }
   .noprint { display: none !important; }
   .ph {
     display: block;
     text-align: center;
     margin-bottom: 5px;
-    border-bottom: 1px solid #000;
-    padding-bottom: 3px;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 4px;
   }
   .ph h1 {
-    font-size: 12.5pt;
+    font-size: 13pt;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin: 0;
   }
   .ph p {
     font-size: 8.5pt;
     font-weight: 700;
+    margin: 2px 0 0 0;
   }
   .wrap {
     border: none !important;
@@ -139,6 +156,7 @@ small.cd {
     min-width: 0 !important;
     width: 25% !important;
     position: static !important;
+    background: #f8fafc !important;
   }
   small.cd { font-size: 5.6pt !important; }
   .sig {
@@ -151,51 +169,66 @@ small.cd {
   }
   .sig-block {
     text-align: center;
-    width: 200px;
+    width: 210px;
   }
   .sig-line {
     border-top: 1px solid #000;
-    padding-top: 2px;
+    padding-top: 3px;
     font-weight: 700;
   }
 }
 </style>
-</head>
-<body class="p-3 bg-white min-h-screen flex flex-col">
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mr-auto{margin-right:auto}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.hidden{display:none}.h-2{height:0.5rem}.h-3\.5{height:0.875rem}.h-7{height:1.75rem}.min-h-screen{min-height:100vh}.w-2{width:0.5rem}.w-3\.5{width:0.875rem}.w-7{width:1.75rem}.w-full{width:100%}.max-w-full{max-width:100%}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3\.5{padding:0.875rem}.p-5{padding:1.25rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.pb-2{padding-bottom:0.5rem}.pb-2\.5{padding-bottom:0.625rem}.pt-2{padding-top:0.5rem}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[11px\]{font-size:11px}.text-\[8pt\]{font-size:8pt}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-wider{letter-spacing:0.05em}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop\:bg-slate-900\/50::backdrop{background-color:rgb(15 23 42 / 0.5)}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.focus\:border-blue-600:focus{--tw-border-opacity:1;border-color:rgb(37 99 235 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-600:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(37 99 235 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:text-base{font-size:1rem;line-height:1.5rem}}</style></head>
+<body class="p-3.5 min-h-screen flex flex-col">
 
 <!-- Top Control Toolbar -->
 <div class="noprint max-w-full mb-3 flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2.5">
   <div class="mr-auto flex items-center gap-2">
-    <h1 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">Aircraft Inspection Color-Coded Table Generator</h1>
-    <span class="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono border border-slate-300">Fleet: 703 to 722</span>
+    <div class="w-7 h-7 bg-blue-900 text-white rounded flex items-center justify-center font-bold text-xs tracking-wider shadow-sm">AC</div>
+    <div>
+      <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Aircraft Inspection Color-Coded Table Generator</h1>
+      <span class="text-[11px] text-slate-500 font-mono">Target Fleet: AC 703 to 722 (9 Tails)</span>
+    </div>
   </div>
 
-  <label class="text-xs font-semibold text-slate-700 flex items-center gap-1.5 bg-slate-50 border border-slate-300 rounded px-2 py-1">
+  <label class="text-xs font-semibold text-slate-700 flex items-center gap-1.5 bg-white border border-slate-300 rounded px-2.5 py-1 shadow-sm">
     Reference Date (DT):
-    <input type="date" id="dp" class="bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-mono text-slate-900 focus:outline-none">
+    <input type="date" id="dp" class="bg-slate-50 border border-slate-300 rounded px-1.5 py-0.5 text-xs font-mono text-slate-900 focus:outline-none focus:ring-1 focus:ring-blue-600">
   </label>
 
   <input type="file" id="fi" accept="image/*,application/pdf" class="hidden">
-  <button class="btn" onclick="fi.click()">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+  <button class="btn" onclick="document.getElementById('fi').click()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
     Upload Photo / PDF
   </button>
-  <button class="btn alt" onclick="togglePasteDialog(true)">Paste / Quick Load</button>
-  <button class="btn alt" onclick="openKeyModal()">API Key</button>
+  <button class="btn alt" onclick="togglePasteDialog(true)">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+    Paste / Quick Load
+  </button>
+  <button class="btn alt" onclick="openKeyModal()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+    API Key
+  </button>
   <button class="btn alt" onclick="resetData()">Reset Baseline</button>
-  <button class="btn alt" onclick="copyHTML()">Copy HTML</button>
-  <button class="btn ok" onclick="window.print()">Print A4</button>
+  <button class="btn alt" onclick="copyHTML()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+    Copy HTML
+  </button>
+  <button class="btn ok" onclick="window.print()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+    Print A4
+  </button>
 </div>
 
 <!-- Status Message & Color Legend -->
-<div id="st" class="noprint text-xs text-slate-700 mb-2 font-medium flex flex-wrap items-center justify-between bg-slate-50 border border-slate-200 px-3 py-1.5 rounded gap-2">
+<div id="st" class="noprint text-xs text-slate-700 mb-2 font-medium flex flex-wrap items-center justify-between bg-white border border-slate-200 px-3 py-1.5 rounded gap-2 shadow-xs">
   <span id="st-msg">Baseline dataset loaded. Cells are directly editable; priority colors recalculate instantly.</span>
-  <span id="vision-indicator" class="text-blue-700 font-semibold font-mono text-[11px] flex items-center gap-1">
-    <span class="w-2 h-2 rounded-full bg-blue-500 inline-block"></span> Ready
+  <span id="vision-indicator" class="text-emerald-700 font-semibold font-mono text-[11px] flex items-center gap-1.5">
+    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Ready
   </span>
 </div>
 
-<div class="noprint text-xs mb-3 flex flex-wrap items-center gap-3 text-slate-700 font-medium bg-slate-50 border border-slate-200 p-1.5 rounded">
+<div class="noprint text-[11px] mb-3 flex flex-wrap items-center gap-3 text-slate-700 font-medium bg-white border border-slate-200 p-2 rounded shadow-xs">
   <span><i class="sw" style="background:#f4cccc"></i>Critical / Overdue (&lt;10% limit, &lt;30h OH, &lt;5h Turbo, &lt;5 Ldg)</span>
   <span><i class="sw" style="background:#fce4d6"></i>Caution (Near limit, 5–7h Turbo, 5–10 Ldg, Due ≤ 7d)</span>
   <span><i class="sw" style="background:#fff2cc"></i>Monitor (Due 14–30d, Idle ≥ 20d)</span>
@@ -206,26 +239,26 @@ small.cd {
 <!-- Print-Only Document Title Header -->
 <div class="ph">
   <h1>AC FORECAST FOR NEXT SCHEDULE JOB</h1>
-  <p id="phd">Status as of --</p>
+  <p id="phd">Status as of DT: 04-Oct-2026 (Target Fleet: 703 to 722)</p>
 </div>
 
 <!-- Main Table Display Area -->
 <div class="wrap mb-3">
-  <table id="tb"></table>
+  <table id="tb"><thead><tr><th id="dth" style="text-align:left;"><div>Description</div><div style="font-size:0.7rem; font-family:monospace; color:#1e3a8a; font-weight:800; margin-top:1px;">(DT: 04-Oct-2026)</div></th><th style="width:8%;">AC 703</th><th style="width:8%;">AC 704</th><th style="width:8%;">AC 711</th><th style="width:8%;">AC 712</th><th style="width:8%;">AC 713</th><th style="width:8%;">AC 714</th><th style="width:8%;">AC 716</th><th style="width:8%;">AC 719</th><th style="width:8%;">AC 722</th></tr></thead><tbody><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">1. AC 100±10 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="0" data-t="703" class="o">98</td><td contenteditable="true" data-r="0" data-t="704" class="w">--</td><td contenteditable="true" data-r="0" data-t="711" class="g">19:02</td><td contenteditable="true" data-r="0" data-t="712" class="r">00:31</td><td contenteditable="true" data-r="0" data-t="713" class="r">07:21</td><td contenteditable="true" data-r="0" data-t="714" class="g">16:25</td><td contenteditable="true" data-r="0" data-t="716" class="g">97:56</td><td contenteditable="true" data-r="0" data-t="719" class="g">16:39</td><td contenteditable="true" data-r="0" data-t="722" class="r">04:39</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">2. AC 300±25 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="1" data-t="703" class="w">--</td><td contenteditable="true" data-r="1" data-t="704" class="r">0:24</td><td contenteditable="true" data-r="1" data-t="711" class="w">--</td><td contenteditable="true" data-r="1" data-t="712" class="w">--</td><td contenteditable="true" data-r="1" data-t="713" class="w">--</td><td contenteditable="true" data-r="1" data-t="714" class="w">--</td><td contenteditable="true" data-r="1" data-t="716" class="w">--</td><td contenteditable="true" data-r="1" data-t="719" class="w">--</td><td contenteditable="true" data-r="1" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">3. Eng 5:00 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="2" data-t="703" class="w">--</td><td contenteditable="true" data-r="2" data-t="704" class="w">--</td><td contenteditable="true" data-r="2" data-t="711" class="w">--</td><td contenteditable="true" data-r="2" data-t="712" class="w">--</td><td contenteditable="true" data-r="2" data-t="713" class="w">--</td><td contenteditable="true" data-r="2" data-t="714" class="w">--</td><td contenteditable="true" data-r="2" data-t="716" class="w">--</td><td contenteditable="true" data-r="2" data-t="719" class="w">--</td><td contenteditable="true" data-r="2" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">4. Eng 25±5 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="3" data-t="703" class="w">--</td><td contenteditable="true" data-r="3" data-t="704" class="r">02:24</td><td contenteditable="true" data-r="3" data-t="711" class="g">08:08</td><td contenteditable="true" data-r="3" data-t="712" class="w">--</td><td contenteditable="true" data-r="3" data-t="713" class="w">--</td><td contenteditable="true" data-r="3" data-t="714" class="w">--</td><td contenteditable="true" data-r="3" data-t="716" class="w">--</td><td contenteditable="true" data-r="3" data-t="719" class="w">--</td><td contenteditable="true" data-r="3" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">5. Eng 50±10 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="4" data-t="703" class="g">11:31</td><td contenteditable="true" data-r="4" data-t="704" class="g">27:24</td><td contenteditable="true" data-r="4" data-t="711" class="g">33:08</td><td contenteditable="true" data-r="4" data-t="712" class="w">--</td><td contenteditable="true" data-r="4" data-t="713" class="w">--</td><td contenteditable="true" data-r="4" data-t="714" class="w">--</td><td contenteditable="true" data-r="4" data-t="716" class="w">--</td><td contenteditable="true" data-r="4" data-t="719" class="w">--</td><td contenteditable="true" data-r="4" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">6. Eng 100±20 Hrs Insp Left (Hrs)</td><td contenteditable="true" data-r="5" data-t="703" class="g">61:31</td><td contenteditable="true" data-r="5" data-t="704" class="g">77:24</td><td contenteditable="true" data-r="5" data-t="711" class="g">83:08</td><td contenteditable="true" data-r="5" data-t="712" class="r">00:49</td><td contenteditable="true" data-r="5" data-t="713" class="w">--</td><td contenteditable="true" data-r="5" data-t="714" class="g">20:17</td><td contenteditable="true" data-r="5" data-t="716" class="g">16:04</td><td contenteditable="true" data-r="5" data-t="719" class="g">21:56</td><td contenteditable="true" data-r="5" data-t="722" class="r">04:17</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">7. Total Eng Hrs</td><td contenteditable="true" data-r="6" data-t="703" class="w">234:33</td><td contenteditable="true" data-r="6" data-t="704" class="w">22:36</td><td contenteditable="true" data-r="6" data-t="711" class="w">162:14</td><td contenteditable="true" data-r="6" data-t="712" class="w">107:26</td><td contenteditable="true" data-r="6" data-t="713" class="w">300:05</td><td contenteditable="true" data-r="6" data-t="714" class="w">195:41</td><td contenteditable="true" data-r="6" data-t="716" class="w">283:56</td><td contenteditable="true" data-r="6" data-t="719" class="w">175:08</td><td contenteditable="true" data-r="6" data-t="722" class="w">295:43</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">8. Eng Ser No</td><td contenteditable="true" data-r="7" data-t="703" class="w">31P7C05052<br>(2nd O/H)</td><td contenteditable="true" data-r="7" data-t="704" class="w">31P7C12062<br>(2nd O/H)</td><td contenteditable="true" data-r="7" data-t="711" class="w">15P13F050019W<br>(2nd O/H)</td><td contenteditable="true" data-r="7" data-t="712" class="w">15P13F120063W<br>(1st O/H)</td><td contenteditable="true" data-r="7" data-t="713" class="w">15P13F060028W<br>(1st O/H)</td><td contenteditable="true" data-r="7" data-t="714" class="w">15P13F50023W<br>(1st O/H)</td><td contenteditable="true" data-r="7" data-t="716" class="w">15P13F05002W<br>(2nd O/H)</td><td contenteditable="true" data-r="7" data-t="719" class="w">15P13F120065W<br>(1st O/H)</td><td contenteditable="true" data-r="7" data-t="722" class="w">15P13F110055W<br>(1st O/H)</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">9. Eng OH/Rtd Left (Hrs)</td><td contenteditable="true" data-r="8" data-t="703" class="g">65:27<br>(Rtd)</td><td contenteditable="true" data-r="8" data-t="704" class="g">277:24<br>(Rtd)</td><td contenteditable="true" data-r="8" data-t="711" class="g">137:46<br>(Rtd)</td><td contenteditable="true" data-r="8" data-t="712" class="g">192:34<br>(2nd O/H due)</td><td contenteditable="true" data-r="8" data-t="713" class="y">--<br>(2nd O/H due)</td><td contenteditable="true" data-r="8" data-t="714" class="g">104:19<br>(2nd O/H due)</td><td contenteditable="true" data-r="8" data-t="716" class="r">16:06<br>(Rtd)</td><td contenteditable="true" data-r="8" data-t="719" class="g">124:52<br>(2nd O/H due)</td><td contenteditable="true" data-r="8" data-t="722" class="r">04:17<br>(2nd O/H due)</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">10. Turbo Cooler Oil Charge Due Left (Eng hrs)</td><td contenteditable="true" data-r="9" data-t="703" class="g">17:45<br>(252:18)</td><td contenteditable="true" data-r="9" data-t="704" class="g">09:54<br>(32:30)</td><td contenteditable="true" data-r="9" data-t="711" class="g">15:15<br>(177:29)</td><td contenteditable="true" data-r="9" data-t="712" class="g">10:29<br>(117:55)</td><td contenteditable="true" data-r="9" data-t="713" class="r">00:32<br>(299:33)</td><td contenteditable="true" data-r="9" data-t="714" class="g">07:41<br>(203:22)</td><td contenteditable="true" data-r="9" data-t="716" class="g">16:04<br>(300:00)</td><td contenteditable="true" data-r="9" data-t="719" class="g">20:00<br>(195:08)</td><td contenteditable="true" data-r="9" data-t="722" class="g">15:37<br>(311:20)</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">11. Wheel Bearing Greasing Left (Ldg)</td><td contenteditable="true" data-r="10" data-t="703" class="g">26</td><td contenteditable="true" data-r="10" data-t="704" class="g">11</td><td contenteditable="true" data-r="10" data-t="711" class="g">24</td><td contenteditable="true" data-r="10" data-t="712" class="g">35</td><td contenteditable="true" data-r="10" data-t="713" class="o">10</td><td contenteditable="true" data-r="10" data-t="714" class="g">24</td><td contenteditable="true" data-r="10" data-t="716" class="g">27</td><td contenteditable="true" data-r="10" data-t="719" class="g">17</td><td contenteditable="true" data-r="10" data-t="722" class="g">14</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">12. Brake Disk Change Due Left (Ldg)</td><td contenteditable="true" data-r="11" data-t="703" class="g">235</td><td contenteditable="true" data-r="11" data-t="704" class="g">115</td><td contenteditable="true" data-r="11" data-t="711" class="g">166</td><td contenteditable="true" data-r="11" data-t="712" class="g">134</td><td contenteditable="true" data-r="11" data-t="713" class="g">122</td><td contenteditable="true" data-r="11" data-t="714" class="g">142</td><td contenteditable="true" data-r="11" data-t="716" class="g">93</td><td contenteditable="true" data-r="11" data-t="719" class="g">152</td><td contenteditable="true" data-r="11" data-t="722" class="g">204</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">13. AC Idle for (Day)</td><td contenteditable="true" data-r="12" data-t="703" class="g">05</td><td contenteditable="true" data-r="12" data-t="704" class="y">38</td><td contenteditable="true" data-r="12" data-t="711" class="g">05</td><td contenteditable="true" data-r="12" data-t="712" class="g">14</td><td contenteditable="true" data-r="12" data-t="713" class="y">33</td><td contenteditable="true" data-r="12" data-t="714" class="g">06</td><td contenteditable="true" data-r="12" data-t="716" class="g">05</td><td contenteditable="true" data-r="12" data-t="719" class="g">14</td><td contenteditable="true" data-r="12" data-t="722" class="g">05</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">14. Last Flg Date</td><td contenteditable="true" data-r="13" data-t="703" class="w">29.09.26</td><td contenteditable="true" data-r="13" data-t="704" class="w">24.08.26</td><td contenteditable="true" data-r="13" data-t="711" class="w">29.09.26</td><td contenteditable="true" data-r="13" data-t="712" class="w">20.09.26</td><td contenteditable="true" data-r="13" data-t="713" class="w">30.08.26</td><td contenteditable="true" data-r="13" data-t="714" class="w">28.09.26</td><td contenteditable="true" data-r="13" data-t="716" class="w">29.09.26</td><td contenteditable="true" data-r="13" data-t="719" class="w">20.09.26</td><td contenteditable="true" data-r="13" data-t="722" class="w">29.09.26</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">15. Last G/R Date</td><td contenteditable="true" data-r="14" data-t="703" class="w">--</td><td contenteditable="true" data-r="14" data-t="704" class="w">--</td><td contenteditable="true" data-r="14" data-t="711" class="w">--</td><td contenteditable="true" data-r="14" data-t="712" class="w">--</td><td contenteditable="true" data-r="14" data-t="713" class="w">--</td><td contenteditable="true" data-r="14" data-t="714" class="w">--</td><td contenteditable="true" data-r="14" data-t="716" class="w">--</td><td contenteditable="true" data-r="14" data-t="719" class="w">21.09.26</td><td contenteditable="true" data-r="14" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">16. Last AB G/R Date</td><td contenteditable="true" data-r="15" data-t="703" class="w">--</td><td contenteditable="true" data-r="15" data-t="704" class="w">--</td><td contenteditable="true" data-r="15" data-t="711" class="w">--</td><td contenteditable="true" data-r="15" data-t="712" class="w">--</td><td contenteditable="true" data-r="15" data-t="713" class="w">--</td><td contenteditable="true" data-r="15" data-t="714" class="w">--</td><td contenteditable="true" data-r="15" data-t="716" class="w">--</td><td contenteditable="true" data-r="15" data-t="719" class="w">--</td><td contenteditable="true" data-r="15" data-t="722" class="w">--</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">17. Wing and belly Drop Tank Shackles Insp On</td><td contenteditable="true" data-r="16" data-t="703" class="g">27.11.26<small class="cd" contenteditable="false">(54d left)</small></td><td contenteditable="true" data-r="16" data-t="704" class="g">13.11.26<small class="cd" contenteditable="false">(40d left)</small></td><td contenteditable="true" data-r="16" data-t="711" class="y">30.10.26<small class="cd" contenteditable="false">(26d left)</small></td><td contenteditable="true" data-r="16" data-t="712" class="y">30.10.26<small class="cd" contenteditable="false">(26d left)</small></td><td contenteditable="true" data-r="16" data-t="713" class="r">29.09.26<small class="cd" contenteditable="false">(5d OVERDUE)</small></td><td contenteditable="true" data-r="16" data-t="714" class="g">17.12.26<small class="cd" contenteditable="false">(74d left)</small></td><td contenteditable="true" data-r="16" data-t="716" class="r">16.09.26<small class="cd" contenteditable="false">(18d OVERDUE)</small></td><td contenteditable="true" data-r="16" data-t="719" class="g">W-01.12.26<br>B-01.12.26<small class="cd" contenteditable="false">(58d left)</small></td><td contenteditable="true" data-r="16" data-t="722" class="y">03.11.26<small class="cd" contenteditable="false">(30d left)</small></td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">18. MB E/Seat 02 Yearly Insp Due Date</td><td contenteditable="true" data-r="17" data-t="703" class="y">20.10.26<small class="cd" contenteditable="false">(16d left)</small></td><td contenteditable="true" data-r="17" data-t="704" class="g">19.7.27<small class="cd" contenteditable="false">(288d left)</small></td><td contenteditable="true" data-r="17" data-t="711" class="g">04.12.27<small class="cd" contenteditable="false">(426d left)</small></td><td contenteditable="true" data-r="17" data-t="712" class="g">22.06.27<small class="cd" contenteditable="false">(261d left)</small></td><td contenteditable="true" data-r="17" data-t="713" class="r">10.09.26<small class="cd" contenteditable="false">(24d OVERDUE)</small></td><td contenteditable="true" data-r="17" data-t="714" class="g">29.12.26<small class="cd" contenteditable="false">(86d left)</small></td><td contenteditable="true" data-r="17" data-t="716" class="g">05.11.26<small class="cd" contenteditable="false">(32d left)</small></td><td contenteditable="true" data-r="17" data-t="719" class="g">19.02.28<small class="cd" contenteditable="false">(503d left)</small></td><td contenteditable="true" data-r="17" data-t="722" class="g">12.01.28<small class="cd" contenteditable="false">(465d left)</small></td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">19. MB E/Seat Carts Life Expired Date</td><td contenteditable="true" data-r="18" data-t="703" class="y">16.10.26<small class="cd" contenteditable="false">(12d left)</small></td><td contenteditable="true" data-r="18" data-t="704" class="g">16.7.27<small class="cd" contenteditable="false">(285d left)</small></td><td contenteditable="true" data-r="18" data-t="711" class="g">01.12.27<small class="cd" contenteditable="false">(423d left)</small></td><td contenteditable="true" data-r="18" data-t="712" class="g">21.06.27<small class="cd" contenteditable="false">(260d left)</small></td><td contenteditable="true" data-r="18" data-t="713" class="g">04.03.28<small class="cd" contenteditable="false">(517d left)</small></td><td contenteditable="true" data-r="18" data-t="714" class="g">09.02.28<small class="cd" contenteditable="false">(493d left)</small></td><td contenteditable="true" data-r="18" data-t="716" class="g">08.02.28<small class="cd" contenteditable="false">(492d left)</small></td><td contenteditable="true" data-r="18" data-t="719" class="g">19.02.28<small class="cd" contenteditable="false">(503d left)</small></td><td contenteditable="true" data-r="18" data-t="722" class="g">12.01.28<small class="cd" contenteditable="false">(465d left)</small></td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">20. All Armt Sys Power ON Chk Due Date</td><td contenteditable="true" data-r="19" data-t="703" class="y">N/A</td><td contenteditable="true" data-r="19" data-t="704" class="y">N/A</td><td contenteditable="true" data-r="19" data-t="711" class="g">17.11.26<small class="cd" contenteditable="false">(44d left)</small></td><td contenteditable="true" data-r="19" data-t="712" class="g">05.11.26<small class="cd" contenteditable="false">(32d left)</small></td><td contenteditable="true" data-r="19" data-t="713" class="y">16.10.26<small class="cd" contenteditable="false">(12d left)</small></td><td contenteditable="true" data-r="19" data-t="714" class="g">21.11.26<small class="cd" contenteditable="false">(48d left)</small></td><td contenteditable="true" data-r="19" data-t="716" class="g">18.11.26<small class="cd" contenteditable="false">(45d left)</small></td><td contenteditable="true" data-r="19" data-t="719" class="g">19.11.26<small class="cd" contenteditable="false">(46d left)</small></td><td contenteditable="true" data-r="19" data-t="722" class="g">04.11.26<small class="cd" contenteditable="false">(31d left)</small></td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">21. Left Wheel Tyre Ldg (Total)</td><td contenteditable="true" data-r="20" data-t="703" class="w">45</td><td contenteditable="true" data-r="20" data-t="704" class="w">19</td><td contenteditable="true" data-r="20" data-t="711" class="w">06</td><td contenteditable="true" data-r="20" data-t="712" class="w">66</td><td contenteditable="true" data-r="20" data-t="713" class="w">47</td><td contenteditable="true" data-r="20" data-t="714" class="w">45</td><td contenteditable="true" data-r="20" data-t="716" class="w">44</td><td contenteditable="true" data-r="20" data-t="719" class="w">13</td><td contenteditable="true" data-r="20" data-t="722" class="w">35</td></tr><tr><td style="text-align:left; font-weight:600; background:#f8fafc;">22. Right Wheel Tyre Ldg (Total)</td><td contenteditable="true" data-r="21" data-t="703" class="w">04</td><td contenteditable="true" data-r="21" data-t="704" class="w">35</td><td contenteditable="true" data-r="21" data-t="711" class="w">06</td><td contenteditable="true" data-r="21" data-t="712" class="w">35</td><td contenteditable="true" data-r="21" data-t="713" class="w">47</td><td contenteditable="true" data-r="21" data-t="714" class="w">45</td><td contenteditable="true" data-r="21" data-t="716" class="w">44</td><td contenteditable="true" data-r="21" data-t="719" class="w">13</td><td contenteditable="true" data-r="21" data-t="722" class="w">26</td></tr></tbody></table>
 </div>
 
 <!-- Print-Only Authority Footer Signature Block -->
 <div class="sig">
   <div class="text-[9px] text-slate-600">
-    <span><b>RED</b> = Immediate Action</span> &bull; 
-    <span><b>ORANGE</b> = Caution / 7 Days</span> &bull; 
-    <span><b>YELLOW</b> = Monitor / 30 Days</span> &bull; 
+    <span><b>RED</b> = Immediate Action</span> • 
+    <span><b>ORANGE</b> = Caution / 7 Days</span> • 
+    <span><b>YELLOW</b> = Monitor / 30 Days</span> • 
     <span><b>GREEN</b> = Safe Margin</span>
   </div>
   <div class="sig-block">
-    <div style="height: 28px;"></div>
+    <div style="height: 32px;"></div>
     <div class="sig-line">Warrant Officer (WO)</div>
-    <div id="sig-date" class="text-[8pt] text-slate-600 mt-0.5">--</div>
+    <div id="sig-date" class="text-[8pt] text-slate-600 mt-0.5">01 Oct 26</div>
   </div>
 </div>
 
@@ -233,18 +266,17 @@ small.cd {
 <dialog id="pd-modal" class="rounded-xl p-5 shadow-2xl w-full max-w-lg border border-slate-300 backdrop:bg-slate-900/50">
   <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
     <h2 class="font-bold text-slate-900 text-sm">Paste Schedule Text or Quick-Switch Sheet</h2>
-    <button onclick="togglePasteDialog(false)" class="text-slate-400 hover:text-slate-600 text-sm font-bold">&times;</button>
+    <button onclick="togglePasteDialog(false)" class="text-slate-400 hover:text-slate-600 text-base font-bold">×</button>
   </div>
-  <p class="text-xs text-slate-600 mb-2">Select a pre-verified schedule snapshot or paste rows directly copied from Excel/WhatsApp/Word:</p>
+  <p class="text-xs text-slate-600 mb-2">Select a pre-verified schedule snapshot or paste rows directly copied from Excel/Sheets/Word:</p>
   <div class="flex gap-2 mb-3">
-    <button class="btn alt text-xs flex-1" onclick="loadSnapshot20Aug()">Load 20-AUG-2026 Sheet</button>
-    <button class="btn alt text-xs flex-1" onclick="loadSnapshot04Oct()">Load 04-OCT-2026 Sheet</button>
+    <button class="btn alt text-xs flex-1 justify-center" onclick="loadSnapshot20Aug()">Load 20-AUG-2026 Sheet</button>
+    <button class="btn alt text-xs flex-1 justify-center" onclick="loadSnapshot04Oct()">Load 04-OCT-2026 Sheet</button>
   </div>
-  <textarea id="paste-area" rows="6" placeholder="Paste schedule table or row text here (tabs or commas)..." 
-    class="w-full border border-slate-300 rounded p-2 text-xs font-mono text-slate-800 focus:outline-none focus:border-blue-600 mb-3"></textarea>
+  <textarea id="paste-area" rows="6" placeholder="Paste schedule table or row text here (tabs, commas, or semicolons)..." class="w-full border border-slate-300 rounded p-2 text-xs font-mono text-slate-800 focus:outline-none focus:border-blue-600 mb-3"></textarea>
   <div class="flex justify-end gap-2">
     <button class="btn alt" onclick="togglePasteDialog(false)">Cancel</button>
-    <button class="btn" onclick="parsePastedContent()">Parse & Apply</button>
+    <button class="btn" onclick="parsePastedContent()">Parse &amp; Apply</button>
   </div>
 </dialog>
 
@@ -252,19 +284,18 @@ small.cd {
 <dialog id="km" class="rounded-xl p-5 shadow-2xl w-full max-w-md border border-slate-300 backdrop:bg-slate-900/50">
   <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
     <h2 class="font-bold text-slate-900 text-sm">Google AI Studio API Key Setup</h2>
-    <button onclick="km.close()" class="text-slate-400 hover:text-slate-600 text-sm font-bold">&times;</button>
+    <button onclick="document.getElementById('km').close()" class="text-slate-400 hover:text-slate-600 text-base font-bold">×</button>
   </div>
-  <div class="bg-amber-50 border border-amber-200 rounded p-2.5 mb-3 text-xs text-amber-800">
-    <b>Important:</b> Valid Google AI Studio keys always start with <code class="bg-amber-100 px-1 py-0.5 rounded font-mono font-bold">AIzaSy...</code>.<br>
-    Tokens starting with <code class="font-mono">AQ.</code> or <code class="font-mono">ya29.</code> are temporary session credentials and will be rejected by Google's API with HTTP 400.
+  <div class="bg-blue-50 border border-blue-200 rounded p-2.5 mb-3 text-xs text-blue-900 leading-relaxed">
+    <b>Supported Credentials:</b> Standard Google AI Studio API Keys (<code class="bg-blue-100 px-1 py-0.5 rounded font-mono font-bold">AIzaSy...</code>) as well as Bearer tokens (<code class="bg-blue-100 px-1 py-0.5 rounded font-mono font-bold">AQ...</code> / <code class="bg-blue-100 px-1 py-0.5 rounded font-mono font-bold">ya29...</code>) are fully supported.
   </div>
   <label class="text-xs font-semibold text-slate-700 block mb-1">
-    Google AI Studio Key:
-    <input id="ak" type="password" class="border border-slate-300 rounded w-full px-2.5 py-1.5 mt-1 font-mono text-xs text-slate-900 focus:outline-none focus:border-blue-600" placeholder="AIzaSy...">
+    API Key / Auth Token:
+    <input id="ak" type="password" class="border border-slate-300 rounded w-full px-2.5 py-1.5 mt-1 font-mono text-xs text-slate-900 focus:outline-none focus:border-blue-600" placeholder="AIzaSy... or AQ...">
   </label>
   <div class="flex items-center justify-between mt-2 mb-3">
-    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-xs text-blue-600 hover:underline">
-      Get Free API Key from Google AI Studio &rarr;
+    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-xs text-blue-600 hover:underline" rel="noopener noreferrer">
+      Get Free API Key from Google AI Studio →
     </a>
   </div>
   <label class="text-xs font-semibold text-slate-700 block mb-1">
@@ -272,16 +303,19 @@ small.cd {
     <input id="am" class="border border-slate-300 rounded w-full px-2.5 py-1.5 mt-1 font-mono text-xs text-slate-900 focus:outline-none" value="gemini-2.5-flash">
   </label>
   <div class="flex justify-end gap-2 mt-4 pt-2 border-t border-slate-200">
-    <button class="btn alt" onclick="km.close()">Cancel</button>
+    <button class="btn alt" onclick="document.getElementById('km').close()">Cancel</button>
     <button class="btn" onclick="saveKey()">Save Key</button>
   </div>
 </dialog>
 
 <script>
+// Embedded default API credential provided
+const DEFAULT_KEY = "AQ.Ab8RN6KYUUfppCcp-pZMGThCQr8K535LywYsPGlQ7lPFFkzbIQ";
+
 const TAILS = [703, 704, 711, 712, 713, 714, 716, 719, 722];
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-// Exact 22-row maintenance specifications
+// Exact 22 maintenance row specifications
 const ROWS = [
   ['AC 100±10 Hrs Insp Left (Hrs)', 'left', 100],
   ['AC 300±25 Hrs Insp Left (Hrs)', 'left', 300],
@@ -582,26 +616,24 @@ function statusMsg(m, isErr = false) {
   if (indicator) {
     if (isErr) {
       indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span> Error`;
-      indicator.className = "text-red-700 font-semibold font-mono text-[11px] flex items-center gap-1";
+      indicator.className = "text-red-700 font-semibold font-mono text-[11px] flex items-center gap-1.5";
     } else {
       indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Ready`;
-      indicator.className = "text-emerald-700 font-semibold font-mono text-[11px] flex items-center gap-1";
+      indicator.className = "text-emerald-700 font-semibold font-mono text-[11px] flex items-center gap-1.5";
     }
   }
 }
 
 function getApiKey() {
-  const saved = localStorage.getItem('gk');
-  if (saved && saved.startsWith('AIzaSy')) return saved;
-  return "";
+  return localStorage.getItem('gk') || DEFAULT_KEY;
 }
 
 function openKeyModal() {
   const ak = document.getElementById('ak');
   const am = document.getElementById('am');
-  ak.value = localStorage.getItem('gk') || '';
+  ak.value = localStorage.getItem('gk') || DEFAULT_KEY;
   am.value = localStorage.getItem('gm') || 'gemini-2.5-flash';
-  km.showModal();
+  document.getElementById('km').showModal();
 }
 
 function saveKey() {
@@ -610,14 +642,10 @@ function saveKey() {
   const keyVal = ak.value.trim();
   const modelVal = am.value.trim() || 'gemini-2.5-flash';
   
-  if (keyVal && !keyVal.startsWith('AIzaSy')) {
-    statusMsg("Notice: Google AI Studio API keys typically begin with 'AIzaSy'. Please verify your key.", true);
-  }
-  
   if (keyVal) localStorage.setItem('gk', keyVal);
   else localStorage.removeItem('gk');
   localStorage.setItem('gm', modelVal);
-  km.close();
+  document.getElementById('km').close();
   statusMsg('API configuration saved.');
 }
 
@@ -725,7 +753,7 @@ Return JSON with this schema:
     statusMsg('AI Vision is analyzing the forecast matrix...');
 
     const activeModel = localStorage.getItem('gm') || 'gemini-2.5-flash';
-    const models = [activeModel, 'gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-3-flash-preview'];
+    const models = [activeModel, 'gemini-2.5-flash', 'gemini-1.5-flash'];
     let o = null;
     let lastErrDetail = "";
 
@@ -741,12 +769,13 @@ Return JSON with this schema:
 
     for (const m of models) {
       try {
-        const apiUrl = key 
-          ? `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(key)}`
-          : `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
+        const isBearer = key.startsWith('AQ.') || key.startsWith('ya29.');
+        const apiUrl = isBearer 
+          ? `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`
+          : `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(key)}`;
 
         const headers = { 'Content-Type': 'application/json' };
-        if (key && key.startsWith('AQ.')) {
+        if (isBearer) {
           headers['Authorization'] = `Bearer ${key}`;
         }
 
@@ -768,7 +797,7 @@ Return JSON with this schema:
     }
 
     if (!o) {
-      throw new Error(lastErrDetail || "Could not authenticate with Google AI. Please check your API key in settings or use 'Paste / Quick Load'.");
+      throw new Error(lastErrDetail || "Authentication failed. Check your credential or generate an API key from Google AI Studio.");
     }
 
     if (o.date) {
@@ -823,5 +852,5 @@ function copyHTML() {
 
 window.addEventListener('DOMContentLoaded', init);
 </script>
-</body>
-</html>
+
+</body></html>
